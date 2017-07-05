@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions/index';
+import { fetchWeather } from '../actions/index';
 
 @connect(
   null,
   dispatch => bindActionCreators({
-    fetchWeather
-  })
+    fetchWeather,
+  }, dispatch)
 )
 export default class SearchBar extends Component {
+  static propTypes = {
+    fetchWeather: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    fetchWeather() {},
+  };
+
   constructor(props) {
     super(props);
     this.state = { term: '' };
@@ -27,6 +36,7 @@ export default class SearchBar extends Component {
     this.props.fetchWeather(this.state.term);
     this.setState({ term: '' });
   }
+
   render() {
     return (
       <form
@@ -45,7 +55,3 @@ export default class SearchBar extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchWeather: Actions.fetchWeather,
-}, dispatch);
