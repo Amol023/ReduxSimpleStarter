@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import fetchPosts from '../actions/index';
+import { fetchPosts } from '../actions/index';
 import { map } from 'lodash';
+import { Link } from 'react-router-dom';
 
 @connect(({ posts }) => ({ posts }), dispatch => bindActionCreators({ fetchPosts }, dispatch))
 export default class PostsIndex extends Component {
@@ -27,6 +28,11 @@ export default class PostsIndex extends Component {
   render() {
     return (
       <div>
+        <div className="text-xs-right">
+          <Link className="btn btn-primary" to="/posts/new" >
+            Create New
+          </Link>
+        </div>
         <h1>
           Posts
         </h1>
