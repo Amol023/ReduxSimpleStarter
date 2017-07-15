@@ -9,6 +9,11 @@ import {Link} from 'react-router-dom';
   createPost
 }, dispatch))
 class PostsNew extends Component {
+  constructor(props) {
+    super(props);
+    this.onSubmit = ::this.onSubmit;
+  }
+
   renderField({input, label, meta: { touched, error }
   }) {
     const className = `form-group ${touched && error ? 'has-danger' : ''}`;
@@ -24,19 +29,20 @@ class PostsNew extends Component {
   }
 
   onSubmit(values) {
-    this.props.createPost(values);
+    this.props.createPost(values, () => {
+      this.props.history.push('/');
+    });
   }
   render() {
     const {handleSubmit} = this.props;
     return (
       <div>
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
           <Field label="Title" name="title" component={this.renderField}/>
           <Field label="Categories" name="categories" component={this.renderField}/>
           <Field label="Content" name="content" component={this.renderField}/>
           <button className="btn btn-primary">
             Submit
-            <Link></Link>
           </button>
           <Link className="btn btn-danger" to="/">Cancel</Link>
         </form>
